@@ -1,4 +1,3 @@
-javascript
 import React, { useState } from 'react';
 import { Container, Form, Button, Alert, Card } from 'react-bootstrap';
 import axios from 'axios';
