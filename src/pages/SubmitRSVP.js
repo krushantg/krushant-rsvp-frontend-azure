@@ -9,7 +9,7 @@ function SubmitRSVP() {
     firstName: '',
     lastName: '',
     email: '',
-    numberOfGuests: 0,
+    numberOfGuests: '0',
     rsvpStatus: 'Yes'
   });
   const [message, setMessage] = useState('');
@@ -22,7 +22,7 @@ function SubmitRSVP() {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
-      [name]: name === 'numberOfGuests' ? parseInt(value) : value
+      [name]: value
     }));
   };
 
@@ -34,7 +34,8 @@ function SubmitRSVP() {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(formData.email)) return 'Valid email is required';
     
-    if (formData.numberOfGuests < 0 || formData.numberOfGuests > 5) {
+    const guests = parseInt(formData.numberOfGuests, 10);
+    if (Number.isNaN(guests) || guests < 0 || guests > 5) {
       return 'Number of guests must be between 0 and 5';
     }
     if (!['Yes', 'No'].includes(formData.rsvpStatus)) {
@@ -57,14 +58,26 @@ function SubmitRSVP() {
     setMessage('');
 
     try {
-      const response = await axios.post(`${API_URL}/api/rsvp/submit`, formData);
+      // ensure numberOfGuests is sent as a number
+      const payload = {
+        ...formData,
+        numberOfGuests: parseInt(formData.numberOfGuests, 10)
+      };
+
+      const response = await axios.post(`${API_URL}/api/rsvp/submit`, payload);
       setMessage(response.data.message);
       
       setTimeout(() => {
         navigate('/');
       }, 2000);
     } catch (err) {
-      setError(err.response?.data?.message || 'Error submitting RSVP');
+      console.error('RSVP submit error:', err);
+      setError(
+        err.response?.data?.message ||
+        err.response?.data?.error ||
+        err.message ||
+        'Error submitting RSVP'
+      );
     } finally {
       setLoading(false);
     }
