@@ -9,7 +9,7 @@ import ViewRSVP from './pages/ViewRSVP';
 function App() {
   return (
     <Router>
-      <Navbar bg="dark" expand="lg" sticky="top" className="mb-4">
+      <Navbar expand="lg" sticky="top" className="site-navbar mb-4" variant="light">
         <Container>
           <Navbar.Brand href="/">
             <strong>Krushant's New Years Party 2025</strong>

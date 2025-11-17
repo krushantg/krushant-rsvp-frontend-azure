@@ -14,18 +14,33 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  /* Light blue header background for better visual theme */
+  background-color: #cceeff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: #003a63; /* darker text for good contrast on light blue */
 }
 
 .App-link {
   color: #61dafb;
+}
+
+/* Custom navbar (header) styling */
+.site-navbar {
+  background-color: #cceeff !important;
+}
+.site-navbar .navbar-brand,
+.site-navbar .nav-link,
+.site-navbar .navbar-toggler-icon {
+  color: #003a63 !important;
+}
+
+.site-navbar .navbar-toggler {
+  border-color: rgba(0,0,0,0.1);
 }
 
 @keyframes App-logo-spin {
